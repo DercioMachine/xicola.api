@@ -1,21 +1,22 @@
-# Sistema de Gestão Escolar - Frontend
-Este projeto é o frontend do Sistema de Gestão Escolar, desenvolvido em Vue.js. Ele complementa a API construída em Spring Boot, oferecendo uma interface amigável para usuários administradores, professores, alunos e responsáveis gerenciarem suas atividades escolares.
+# Sistema de Gestão Escolar - API
+Este projeto é uma API desenvolvida em Spring Boot para um sistema de gestão escolar completo. A API fornece todas as funcionalidades necessárias para gerenciar uma escola, atuando como um ERP específico para instituições de ensino. O frontend deste sistema é desenvolvido em Vue.js e está localizado em outro repositório.
 
 # Funcionalidades
 ## Gestão de Usuários
-* Autenticação de usuários: login seguro para administradores, professores, alunos e responsáveis.
-* Gerenciamento de perfis: atualização de informações pessoais, fotos de perfil e preferências de contato.
+* Cadastro e autenticação de usuários: administração, professores, alunos e responsáveis.
+* Gerenciamento de permissões e funções: controle detalhado das permissões de acesso com base nas funções dos usuários.
+* Perfis de usuários: gerenciamento de informações pessoais, fotos de perfil, dados de contato e preferências.
   
 ## Gestão Acadêmica
 - Matrículas e transferências:
-  - Interface para cadastro de novos alunos.
+  - Cadastro de novos alunos.
   - Processamento de transferências entre escolas.
-  - Visualização de histórico acadêmico.
+  - Histórico acadêmico dos alunos.
     
 - Gestão de turmas e cursos:
   - Criação e gerenciamento de turmas.
   - Alocação de alunos e professores às turmas.
-  - Visualização de horários de aula.
+  - Configuração de horários de aula.
     
 - Calendário acadêmico e eventos escolares:
   - Planificação e visualização do calendário escolar.
@@ -32,6 +33,7 @@ Este projeto é o frontend do Sistema de Gestão Escolar, desenvolvido em Vue.js
   - Registro de presença/ausência de alunos.
   - Relatórios de frequência para alunos e turmas.
   - Notificações para responsáveis sobre faltas.
+    
 ## Gestão de Disciplinas e Currículo
     
 - Cadastro e gerenciamento de disciplinas:
@@ -59,7 +61,8 @@ Este projeto é o frontend do Sistema de Gestão Escolar, desenvolvido em Vue.js
 - Mural de avisos e comunicados:
   - Publicação de avisos gerais para toda a escola.
   - Comunicados específicos para turmas ou grupos de usuários.
-  - Gestão Financeira
+  
+  # Gestão Financeira
 
 - Controle de mensalidades e pagamentos:
   - Cadastro de planos de pagamento e mensalidades.
@@ -102,65 +105,73 @@ Este projeto é o frontend do Sistema de Gestão Escolar, desenvolvido em Vue.js
     
 ## Tecnologias Utilizadas
 
-- Vue.js: Framework principal para o desenvolvimento do frontend.
-- Vue Router: Para gerenciamento de rotas.
-- Vuex: Para gerenciamento de estado.
-- Axios: Para requisições HTTP.
-- Vuetify: Para componentes de interface.
+- Spring Boot: Framework principal para o desenvolvimento da API.
+- JPA/Hibernate: Para gerenciamento de base de dados.
+- Spring Security: Para autenticação e autorização.
+- JWT: Para gerenciamento de tokens de segurança.
+- MySQL: Como base de dados relacional.
+- Maven: Para gerenciamento de dependências.
+- Swagger: Para documentação da API.
+
 ## Pré-requisitos
-- Node.js: Versão 14 ou superior.
-- npm: Versão 6 ou superior.
-- Configuração e Instalação
+- Java 17 ou superior.
+- Maven 3.6.3 ou superior.
+- PostgreSQL 16.
 
 ## Configuração e Instalação
 - Clone o Repositório
   - Para clonar este repositório e acessar o diretório, execute os seguintes comandos no seu terminal:
 
 ```bash
-git clone https://github.com/DercioMachine/xicola-frontend.git
-cd xicola-frontend
+git clone https://github.com/DercioMachine/xicola.api.git
+cd xicola.api
 
 ```
-## Instalação das Dependências
-- Instale as dependências do projeto utilizando o npm:
+## Configuração da Base de Dados
+- Crie um base de dados no MySQL ou PostgreSQL. Configure o arquivo application.properties com as informações de conexão da base de dados:
 ```bash
-npm install
-
-```
-
-## Configuração da API
-- Crie um arquivo .env na raiz do projeto com as informações de configuração da API:
-```bash
-VITE_APP_API_URL=http://localhost:8080
-
+#PostgreSQL
+spring.datasource.url=jdbc:postgresql://localhost:5432/xixola
+spring.datasource.username=usuario
+spring.datasource.password=senha
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 ```
 
 ## Executando a Aplicação
-- Inicie o servidor de desenvolvimento com o seguinte comando:
+- Com o Maven configurado, você pode executar a aplicação usando o seguinte comando:
 ```bash
-npm run dev
+mvn spring-boot:run
 
 ```
-A aplicação estará disponível em http://localhost:5173.
+A API estará disponível em http://localhost:8080.
 
-## Build para Produção
-Para criar um build otimizado para produção, execute:
-```bash
-npm run build
-
-```
-
-Os arquivos prontos para produção serão gerados na pasta dist.
+## Documentação da API
+- A documentação da API pode ser acessada através do Swagger em http://localhost:8080/swagger-ui.html.
 
 ## Estrutura do Projeto
 ```bash
 src/
-├── assets/         # Arquivos estáticos como imagens e fontes
-├── components/     # Componentes Vue.js reutilizáveis
-├── pages/          # Páginas da aplicação
-├── router/         # Configuração das rotas
-├── store/          # Gerenciamento de estado com Vuex
-├── plugins/        # Plugins Vue.js
-└── App.vue         # Componente raiz
+├── main/
+│   ├── java/com/xicola/xicola/
+│   │   ├── controller/   # Controladores REST
+│   │   ├── model/        # Modelos de dados
+│   │   ├── repository/   # Repositórios JPA
+│   │   ├── service/      # Serviços de negócio
+│   │   ├── config/       # Configurações de segurança e outros
+│   │   └── XicolaApplication.java  # Classe principal
+│   └── resources/
+│       ├── application.properties  # Configurações da aplicação
+│       ├── data.sql                # Dados iniciais (opcional)
+│       └── schema.sql              # Esquema da base de dados (opcional)
+└── test/
+    └── java/com/xicola/xicola  # Testes unitários e de integração
 
 ```
+## Estrutura do Projeto
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir com o projeto:
+1. Fork o repositório.
+2. Crie uma nova branch (git checkout -b minha-branch).
+3. Faça suas alterações e comente (git commit -m 'Minha contribuição').
+4. Envie para o repositório remoto (git push origin minha-branch).
+5. Abra um Pull Request.
